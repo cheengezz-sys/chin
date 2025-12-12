@@ -1,0 +1,44 @@
+<!-- templates/patients/create.html -->
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('patients_list') }}" class="btn btn-outline-secondary mb-3">← К списку пациентов</a>
+
+<h2>Добавить нового пациента</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+        {{ form.full_name.label(class="form-label") }}
+        {{ form.full_name(class="form-control" + (" is-invalid" if form.full_name.errors else "")) }}
+        {% if form.full_name.errors %}
+        <div class="invalid-feedback">
+            {% for error in form.full_name.errors %}{{ error }}<br>{% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            {{ form.birth_date.label(class="form-label") }}
+            {{ form.birth_date(class="form-control", placeholder="2000-12-31") }}
+        </div>
+        <div class="col-md-6">
+            {{ form.phone.label(class="form-label") }}
+            {{ form.phone(class="form-control", placeholder="+77011234567") }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control", placeholder="email@example.com") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.address.label(class="form-label") }}
+        {{ form.address(class="form-control", placeholder="г. Астана, ул. ...") }}
+    </div>
+
+    {{ form.submit(class="btn btn-primary") }}
+</form>
+{% endblock %}

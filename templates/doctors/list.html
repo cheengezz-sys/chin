@@ -1,0 +1,34 @@
+<!-- templates/doctors/list.html -->
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('index') }}" class="btn btn-outline-secondary mb-3">← Назад</a>
+
+<h2>Список врачей</h2>
+
+{% if doctors %}
+<table class="table table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>ФИО</th>
+            <th>Специализация</th>
+            <th>Кабинет</th>
+            <th>Стаж, лет</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in doctors %}
+        <tr>
+            <td>{{ d.FullName }}</td>
+            <td>{{ d.Specialization }}</td>
+            <td>{{ d.Cabinet }}</td>
+            <td>{{ d.Experience }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-warning">
+    <strong>⚠️ Внимание:</strong> В базе данных пока нет врачей.
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+<!-- templates/patients/detail.html -->
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('patients_list') }}" class="btn btn-outline-secondary mb-3">← К списку пациентов</a>
+
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h4>{{ patient.FullName }}</h4>
+    </div>
+    <div class="card-body">
+        <p><strong>Телефон:</strong> {{ patient.Phone }}</p>
+        <p><strong>Email:</strong> {{ patient.Email or '—' }}</p>
+        <p><strong>Адрес:</strong> {{ patient.Address or '—' }}</p>
+        <p><strong>Регистрация:</strong> {{ patient.RegDate }}</p>
+    </div>
+</div>
+
+<h3>Визиты</h3>
+{% if visits %}
+<ul class="list-group">
+    {% for v in visits %}
+    <li class="list-group-item d-flex justify-content-between">
+        <div>
+            <strong>{{ v.VisitDateTime }}</strong> — {{ v.doctor.FullName }} ({{ v.doctor.Specialization }}),
+            статус: <span class="badge bg-{{ 'success' if v.Status == 'completed' else 'warning' if v.Status == 'scheduled' else 'danger' }}">{{ v.Status }}</span>
+        </div>
+        <small>{{ v.Complaint[:50] }}...</small>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="text-muted">Визитов пока нет.</p>
+{% endif %}
+
+<h3>Зубная карта (на основе PatientTeeth)</h3>
+{% if teeth %}
+<ul>
+    {% for pt, tooth in teeth %}
+    <li>{{ tooth.ToothNumber }}/{{ tooth.ToothName }}: <span class="badge bg-{{ 'success' if pt.Status == 'healthy' else 'warning' if pt.Status == 'caries' else 'info' }}">{{ pt.Status }}</span>
+        {% if pt.Notes %} — {{ pt.Notes }}{% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="text-muted">Данные о зубах не внесены.</p>
+{% endif %}
+{% endblock %}

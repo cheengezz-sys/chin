@@ -1,0 +1,10 @@
+/* static/style.css */
+body {
+    padding-bottom: 80px;
+}
+.navbar-brand {
+    font-weight: bold;
+}
+.badge.text-dark {
+    color: #212529 !important;
+}
